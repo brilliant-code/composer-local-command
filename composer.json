@@ -1,6 +1,7 @@
 {
     "name": "osbre/composer-local-packages",
     "description": "Composer plugin to easy add packages for local development",
+    "license": "MIT",
     "type": "composer-plugin",
     "require": {
         "composer-plugin-api": "^1.1"
