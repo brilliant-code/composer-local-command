@@ -1,0 +1,15 @@
+{
+    "name": "osbre/composer-local-packages",
+    "type": "composer-plugin",
+    "require": {
+        "composer-plugin-api": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "OsBre\\ComposerLocalPackages\\": "src/"
+        }
+    },
+    "extra": {
+        "class": "OsBre\\ComposerLocalPackages\\Plugin"
+    }
+}
