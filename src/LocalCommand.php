@@ -36,6 +36,7 @@ class LocalCommand extends BaseCommand
         if (!file_exists($filePath)){
             return $io->writeError("<error> There is no composer.json, in the required directory.</error>");
         }
+
         $packageName = (new JsonFile($filePath))->read()['name'];
 
         $this->addRepository([
@@ -80,7 +81,7 @@ class LocalCommand extends BaseCommand
         return $file->write($json);
     }
 
-    private function addDependency(string $name, string $version, JsonFile $file)
+    private function addDependency(string $name, string $version, JsonFile $file): void
     {
         $json = $file->read();
 
