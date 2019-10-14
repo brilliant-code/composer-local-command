@@ -6,7 +6,7 @@ use Composer\Command\BaseCommand;
 use Composer\Factory;
 use Composer\Installer;
 use Composer\Json\JsonFile;
-use Symfony\Component\Console\Input\{InputInterface, InputArgument};
+use Symfony\Component\Console\Input\{InputInterface, InputArgument, InputOption};
 use Symfony\Component\Console\Output\OutputInterface;
 
 class LocalCommand extends BaseCommand
@@ -17,12 +17,15 @@ class LocalCommand extends BaseCommand
             ->setName('local')
             ->setDefinition(array(
                 new InputArgument('package-path', InputArgument::REQUIRED),
+                new InputOption('no-dev', null, InputOption::VALUE_NONE, 'Disables installation of require-dev packages.'),
+                new InputOption('optimize-autoloader', 'o', InputOption::VALUE_NONE, 'Optimize autoloader during autoloader dump'),
             ));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = $this->getIO();
+        $composer = $this->getComposer();
         $projectFile = new JsonFile(Factory::getComposerFile());
 
         $dirPath = getcwd() . "/" . $input->getArgument('package-path');
@@ -47,8 +50,11 @@ class LocalCommand extends BaseCommand
 
         $this->addDependency($packageName, 'dev-master', $projectFile);
 
-        $installer = Installer::create($io, $this->getComposer());
-        $installer->run();
+        $optimize = $input->getOption('optimize-autoloader') || $composer->getConfig()->get('optimize-autoloader');
+        return Installer::create($io, $this->getComposer())
+            ->setDevMode(!$input->getOption('no-dev'))
+            ->setOptimizeAutoloader($optimize)
+            ->run();
     }
 
     private function addRepository(array $item, JsonFile $file)
