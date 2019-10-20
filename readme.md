@@ -1,7 +1,7 @@
 ## Installation
 
 ```bash
-composer global require osbre/composer-local-packages
+composer global require osbre/composer-local-packages:dev-master
 ```
 
 ## Usage
