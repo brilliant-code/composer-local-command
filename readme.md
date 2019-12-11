@@ -27,9 +27,6 @@ The composer.json file will now look like this:
             "url": "/Users/you/local-package-for-development"
         }
     ],
-    "autoload": {
-        ...
-    },
     ...
 }
 ```
